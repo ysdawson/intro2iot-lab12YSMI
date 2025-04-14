@@ -1,7 +1,8 @@
-# intro2iot-lab12
-
-Introduction to IoT - Lab 12: Collaboration, Troubleshooting, and Debugging
+# intro2iot-lab11
 
 Dawson College - Electronics Engineering Department
 
 Author: Carlos Mendes, PhD
+
+## Introduction to IoT - Lab 11: Collaboration, Troubleshooting, and Debugging
+
