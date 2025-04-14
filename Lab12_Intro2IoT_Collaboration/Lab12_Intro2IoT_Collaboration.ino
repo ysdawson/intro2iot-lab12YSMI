@@ -1,63 +1,62 @@
-// Pin definitions
-const int lightSensorPin = A0;
-const int buttonPin = 2;
-const int ledPin = 9;
+// === Automatic Room Light with Manual Override ===
 
-// Threshold (tweak as needed)
-const int darkThreshold = 500;
+const int lightSensorPin = A0;   // Photoresistor connected to A0
+const int buttonPin = 2;         // Button connected to D2
+const int ledPin = 9;            // LED (room light) connected to D9
 
-// Shared state
+const int darkThreshold = 500;   // Adjust based on ambient light conditions
+
 bool isDark = false;
-bool overrideActive = false;
+bool isButtonOn = false;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(buttonPin, INPUT_PULLUP); // or INPUT with external pull-down
+  pinMode(buttonPin, INPUT);  // Use internal pull-up resistor
   pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
-  // Get current light status
-  isDark = isRoomDark(); // Student 1's function
+  isDark = isRoomDark();             // Light detection logic
+  isButtonOn = isButtonActivated();  // Button-based manual override
 
-  // Check override status
-  overrideActive = checkOverride(); // Student 2's function
-
-  // Apply logic
-  if (isDark && !overrideActive) {
+  // Control the LED
+  if (isDark || isButtonOn) {
     digitalWrite(ledPin, HIGH);
+    Serial.println("LED: ON");
   } else {
     digitalWrite(ledPin, LOW);
+    Serial.println("LED: OFF");
   }
 
-  delay(200);
+  delay(200); // basic debounce + sampling interval
 }
 
-// ===> STUDENT 1 <===
+// ===============================
+// Light Detection – Student 1
 bool isRoomDark() {
   int lightLevel = analogRead(lightSensorPin);
-  Serial.print("Light level: ");
+  Serial.print("Light Level: ");
   Serial.println(lightLevel);
-  
-  // Bug: Comparison logic is inverted or wrong threshold (fix it!)
-  return lightLevel < darkThreshold; // should return true when dark
+
+  // TODO: Fix this logic so it returns true when it's dark
+  return false; // <-- incorrect for now
 }
 
-// ===> STUDENT 2 <===
-bool checkOverride() {
-  static bool lastButtonState = HIGH;
-  static bool override = false;
+// ===============================
+// Manual Switch Control – Student 2
+bool isButtonActivated() {
+  bool state = digitalRead(buttonPin);
+  
+  Serial.print("Button: ");
 
-  bool currentButtonState = digitalRead(buttonPin);
-
-  // Bug: Debounce missing, toggle logic broken (fix it!)
-  if (lastButtonState == HIGH && currentButtonState == LOW) {
-    override = !override;
-    Serial.print("Override toggled: ");
-    Serial.println(override ? "ON" : "OFF");
-    delay(250); // crude debounce
+  // TODO: Fix this logic and print the correct status
+  if (state == HIGH) {
+    // Button not pressed
+    return false;
+  } else {
+    // Button pressed
+    return true;
   }
 
-  lastButtonState = currentButtonState;
-  return override;
+  // HINT: Serial.print should say "ON" or "OFF" too
 }
