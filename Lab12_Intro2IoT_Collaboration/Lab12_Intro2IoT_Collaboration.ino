@@ -36,18 +36,17 @@ void loop() {
 // Light Detection – Student 1
 bool isRoomDark() {
   int lightLevel = analogRead(lightSensorPin);
+  if (lightLevel < darkThreshold){
+     return false; 
+   else
+    return true
+   }
+  }
   Serial.print("Light Level: ");
   Serial.println(lightLevel);
-
-  if (lightLevel < darkThreshold) {
-    return true;  // it's dark
-  } else {
-    return false; // it's bright
-  }
-}
-
+serial.print(isRoomDark);
   // TODO: Fix this logic so it returns true when it's dark
-
+}
 // ===============================
 // Manual Switch Control – Student 2
 bool isButtonActivated() {
