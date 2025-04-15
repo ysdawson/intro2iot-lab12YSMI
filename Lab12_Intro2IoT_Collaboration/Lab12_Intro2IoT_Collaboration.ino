@@ -13,6 +13,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(buttonPin, INPUT);  // Use internal pull-up resistor
   pinMode(ledPin, OUTPUT);
+  pinMode(lightSensorPin, INPUT);
 }
 
 void loop() {
@@ -35,13 +36,17 @@ void loop() {
 // Light Detection – Student 1
 bool isRoomDark() {
   int lightLevel = analogRead(lightSensorPin);
+  if (lightLevel < darkThreshold){
+     return false; 
+   else
+    return true
+   }
+  }
   Serial.print("Light Level: ");
   Serial.println(lightLevel);
-
+serial.print(isRoomDark);
   // TODO: Fix this logic so it returns true when it's dark
-  return false; // <-- incorrect for now
 }
-
 // ===============================
 // Manual Switch Control – Student 2
 bool isButtonActivated() {
