@@ -39,9 +39,14 @@ bool isRoomDark() {
   Serial.print("Light Level: ");
   Serial.println(lightLevel);
 
-  // TODO: Fix this logic so it returns true when it's dark
-  return false; // <-- incorrect for now
+  if (lightLevel < darkThreshold) {
+    return true;  // it's dark
+  } else {
+    return false; // it's bright
+  }
 }
+
+  // TODO: Fix this logic so it returns true when it's dark
 
 // ===============================
 // Manual Switch Control – Student 2
