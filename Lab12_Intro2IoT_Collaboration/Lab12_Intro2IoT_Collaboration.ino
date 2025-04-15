@@ -13,6 +13,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(buttonPin, INPUT);  // Use internal pull-up resistor
   pinMode(ledPin, OUTPUT);
+  pinMode(lightSensorPin, INPUT);
 }
 
 void loop() {
