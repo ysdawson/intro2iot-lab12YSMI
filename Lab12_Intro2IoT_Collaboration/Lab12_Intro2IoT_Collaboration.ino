@@ -11,7 +11,7 @@ bool isButtonOn = false;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(buttonPin, INPUT);  // Use internal pull-up resistor
+  pinMode(buttonPin, INPUT_PULLUP);  // Use internal pull-up resistor
   pinMode(ledPin, OUTPUT);
   pinMode(lightSensorPin, INPUT);
 }
@@ -36,35 +36,23 @@ void loop() {
 // Light Detection – Student 1
 bool isRoomDark() {
   int lightLevel = analogRead(lightSensorPin);
-  if (lightLevel < darkThreshold){
-     return false; 
-   else
-    return true
-   }
-  }
+
   Serial.print("Light Level: ");
   Serial.println(lightLevel);
-serial.print(isRoomDark);
-  // TODO: Fix this logic so it returns true when it's dark
+
+  // Return true if it's dark
+  return (lightLevel < darkThreshold);
 }
 // ===============================
 // Manual Switch Control – Student 2
 bool isButtonActivated() {
   bool state = digitalRead(buttonPin);
-  
-  Serial.print("Button: ");
-  
-  // TODO: Fix this logic and print the correct status
-  if (state == HIGH) {
-    // Button not pressed
-    return false;
-    Serial.print("OFF");
-  } else {
-    // Button pressed
-    return true;
-    Serial.print("ON");
-  }
-  
 
-  // HINT: Serial.print should say "ON" or "OFF" too
+  if (state == HIGH) {
+    Serial.println("Button: OFF");
+    return false;  // Not pressed
+  } else {
+    Serial.println("Button: ON");
+    return true;   // Pressed
+  }
 }
